@@ -7,6 +7,7 @@
 #include "SocketUDP.h"
 #include "../AdresseInternet/AdresseInternet.h"
 
+// Initialise la socket psocket préalablement allouée
 int initSocketUDP(SocketUDP *psocket) {
 	if (psocket == NULL) {
 		return -1;
@@ -19,6 +20,7 @@ int initSocketUDP(SocketUDP *psocket) {
 	return 0;
 }
 
+// Attache la socket sock à l'adresse address et au port indiqué, en prenant en compte les options de flags
 int attacherSocketUDP(SocketUDP *sock, const char *address, uint16_t port, int flags) {
 	if (sock == NULL) {
 		return -1;
@@ -60,6 +62,7 @@ int attacherSocketUDP(SocketUDP *sock, const char *address, uint16_t port, int f
 	return 0;
 }
 
+// Renvoie 0 si la socket a une adresse locale, -1 sinon
 int estAttachee(SocketUDP *socket) {
 	if (socket == NULL) {
 		return -1;
@@ -72,6 +75,9 @@ int estAttachee(SocketUDP *socket) {
 	return -1;
 }
 
+// Remplie buffer avec le nom local de la socket. 
+// Si le buffer est trop petit, le nom est tronqué (et le 0 final n’est pas écrit). Si besoin, socket est mis à jour.
+// Renvoie le nombre d’octets écrits dans buffer, ou -1 en cas d’erreur.
 int getLocalName(SocketUDP *socket, char *buffer, int taille) {
 	if (socket == NULL || buffer == NULL) {
 		return -1;
@@ -84,6 +90,9 @@ int getLocalName(SocketUDP *socket, char *buffer, int taille) {
 	return (int) strlen(buffer);
 }
 
+// Remplie localIP avec l’IP locale de la SocketUDP. 
+// Si le buffer est trop petit, le nom est tronqué (et le 0 final n’est pas écrit).
+// Renvoie le nombre d’octets écrits dans buffer, ou -1 en cas d’erreur.
 int getLocalIP(const SocketUDP *socket, char *localIP, int tailleIP) {
 	if (socket == NULL || localIP == NULL) {
 		return -1;
@@ -96,6 +105,7 @@ int getLocalIP(const SocketUDP *socket, char *localIP, int tailleIP) {
 	return (int) strlen(localIP);
 }
 
+// Renvoie le port de la socket
 uint16_t getLocalPort(const SocketUDP *socket) {
 	if (socket == NULL) {
 		return 0;
@@ -121,6 +131,8 @@ uint16_t getLocalPort(const SocketUDP *socket) {
 	return port;
 }
 
+// Ecrit sur la socket sock vers adresse un bloc d’octets buffer de taille length et retourne la
+// taille des données écrites ou -1 s’il y a erreur.
 ssize_t writeToSocketUDP(SocketUDP *sock, const AdresseInternet *address, const char *buffer, int length) {
 	if (sock == NULL || address == NULL || buffer == NULL) {
 		return -1;
@@ -137,6 +149,10 @@ ssize_t writeToSocketUDP(SocketUDP *sock, const AdresseInternet *address, const 
 	return sendto(sock -> socket, buffer, (size_t) length, 0, &dest_addr, addrlen);
 }
 
+// Lit sur socket les données envoyées par une machine d’adresse adresse. 
+// La fonction est bloquante pendant timeout secondes. 
+// Elle lit et place dans buffer un bloc d’octets de taille au plus length. 
+// Renvoie la taille des données lues ou -1 s’il y a erreur.
 ssize_t recvFromSocketUDP(SocketUDP *socket, char *buffer, int length, AdresseInternet *address, int timeout) {
 	if (socket == NULL || buffer == NULL) {
 		return -1;
@@ -168,6 +184,8 @@ ssize_t recvFromSocketUDP(SocketUDP *socket, char *buffer, int length, AdresseIn
 	return len;
 }
 
+// Ferme la connexion et libère la SocketUDP.
+// Renvoie 0 en cas de succès, -1 en cas d’erreur.
 int closeSocketUDP(SocketUDP *socket) {
 	if (socket == NULL) {
 		return -1;

@@ -112,50 +112,6 @@ AdresseInternet * AdresseInternet_any(uint16_t port) {
  * l'interface loopback à partir d’un numéro de port.
  */
 AdresseInternet * AdresseInternet_loopback(uint16_t port) {
-
-	/*printf("in loopback function\n");
-
-	AdresseInternet *addr = malloc(sizeof(*addr));
-	if (addr == NULL) {
-		return NULL;
-	}
-
-	struct addrinfo hints;
-	memset(&hints, 0, sizeof(hints));
-
-	hints.ai_family = AF_UNSPEC;
-
-	struct addrinfo *result;
-
-	char port_str[5];
-	sprintf(port_str, "%"PRIu16, port);
-
-	if (getaddrinfo(NULL, port_str, &hints, &result) != 0) {
-		free(addr);
-		return NULL;
-	}
-
-	memcpy(((struct sockaddr_storage *) &addr -> sockAddr), 
-  			((struct sockaddr_storage *) result -> ai_addr), 
-  			sizeof(result -> ai_addr));
-
-	memset(&addr -> nom, 0, sizeof(addr -> nom));
-	strncpy(addr -> service, port_str, sizeof(addr -> service));
-
-	   	char ip[16];
-   	uint16_t addrport;
-
-	inet_ntop(AF_INET, &((struct sockaddr_in *) &addr -> sockAddr) -> sin_addr,
-                             ip, result -> ai_addrlen);
-
-	addrport = ntohs(((struct sockaddr_in *) &addr -> sockAddr) -> sin_port);
-
-	printf("AdresseInternet_loopback: ss_family: %d\nip: %s\nport: %d\n", addr -> sockAddr.ss_family, ip, addrport);
-
-	freeaddrinfo(result);
-
-	return addr;*/
-
 	return AdresseInternet_new("127.0.0.1", port);
 }
 /** 

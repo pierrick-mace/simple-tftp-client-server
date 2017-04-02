@@ -83,8 +83,8 @@ int tftp_send_RRQ_wait_DATA_with_timeout(SocketUDP *socket, const AdresseInterne
         return -1;
     }
 
-	char buffer[1024];
-	size_t taille = 1024;
+	char buffer[BUFFER_SIZE];
+	size_t taille = BUFFER_SIZE;
 
 	if (tftp_make_rrq(buffer, &taille, fichier) == -1) {
 		return -1;
@@ -152,8 +152,8 @@ int tftp_send_DATA_wait_ACK_with_timeout(SocketUDP *socket, const AdresseInterne
 		return -1;
 	}
 
-	char buffer[1024];
-	int taille = 1024;	
+	char buffer[BUFFER_SIZE];
+	int taille = BUFFER_SIZE;	
 	int retour; 
 
 	if ((retour = (int) recvFromSocketUDP(socket, buffer, taille, NULL, TIMEOUT_MAX)) == -1) {
@@ -293,7 +293,6 @@ int donneesDATA(const char *paquet, size_t *bloc, char *data) {
     uint16_t *p = (uint16_t *)paquet;
     
     if (ntohs(*p) != DATA) {
-        printf("Not data packet\nPacket is type: %"PRIu16 "\n", ntohs(*p));
         return -1;
     }
 

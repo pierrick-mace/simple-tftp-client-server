@@ -1,5 +1,6 @@
 #define NB_MAX_ENVOI 10
 #define TIMEOUT_MAX 10
+#define BUFFER_SIZE 1024
 
 enum {
 	RRQ = 1,
