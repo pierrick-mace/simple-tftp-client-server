@@ -1,6 +1,6 @@
 # export LD_LIBRARY_PATH=libx86-64:$LD_LIBRARY_PATH
 CC = gcc
-CFLAGS = -g -Wall -Wextra -Wconversion -Werror -pedantic -std=c11 -fPIC -D_XOPEN_SOURCE=700
+CFLAGS = -Wall -Wextra -Wconversion -Werror -pedantic -std=c11 -fPIC -D_XOPEN_SOURCE=700
 LDLIBS = -lAdresseInternet -lSockUDP -lTFTP
 LDFLAGS = -L./libx86-64 -L. -pthread
 PRGS = libSockUDP.so libAdresseInternet.so libTFTP.so server client
