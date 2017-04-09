@@ -231,7 +231,7 @@ void *server_thread(void *arg) {
 
 		data_len = fread(data, sizeof(char), BLK_SIZE, file);
 
-		if (data_len < 512) {
+		if (data_len < BLK_SIZE) {
 			printf("Sending last DATA packet\n");
 			done = true;
 		}
